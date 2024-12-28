@@ -28,7 +28,7 @@ extension AppSession on App {
 /// A class to manage the session of the app.
 /// You must call [_init] to retrieve the session data from the secure storage.
 ///
-/// Use [login] to log in the user and store the token.
+/// Use [save] to save the token and [clear] to clear the token.
 /// Use [isLogged] to check if the user is logged in.
 class Session {
   Session();
@@ -37,16 +37,16 @@ class Session {
 
   bool get isLogged => _token != null;
 
-  /// Logs in the user and stores the token.
-  Future<void> login(String token, {void Function()? onLogin}) async {
+  /// Saves the token and calls the [onSave] callback.
+  Future<void> save(String token, {void Function()? onSave}) async {
     _token = token;
 
     await _saveSession();
-    onLogin?.call();
+    onSave?.call();
   }
 
-  /// Logs out the user and removes the token.
-  Future<void> logout() async {
+  /// Clears the token and calls the [onClear] callback.
+  Future<void> clear([void Function()? onClear]) async {
     _token = null;
     await _clearSession();
   }

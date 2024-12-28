@@ -7,7 +7,7 @@ class AuthenticationView extends StatelessWidget {
   const AuthenticationView({super.key});
 
   void _login(BuildContext context) {
-    App().session.login("__token__", onLogin: () => context.go(Routes.home));
+    App().session.save("__token__", onSave: () => context.go(Routes.home));
   }
 
   @override
