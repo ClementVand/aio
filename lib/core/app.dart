@@ -63,6 +63,7 @@ class App {
     // TODO: Handle inits somewhere else
     // TODO: Create extension interface or inherits from Dependency to simplify initialization
     appLifeCycleHandler?.init(null);
+    // TODO: Simplify usage of AppSession ? Init it anyway ?
     if (useAppSession) await _initSession();
 
     // Initialize dependencies

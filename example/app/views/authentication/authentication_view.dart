@@ -12,16 +12,9 @@ class AuthenticationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text("Authentication View"),
-        const SizedBox(height: 32),
-        ElevatedButton(
-          onPressed: () => _login(context),
-          child: const Text("Login"),
-        ),
-      ],
+    return PagePlaceholder(
+      label: "Authentication View",
+      onButtonPressed: () => _login(context),
     );
   }
 }

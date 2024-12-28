@@ -1,6 +1,7 @@
 import 'package:aio/aio.dart';
 import 'package:flutter/material.dart';
 
+import '../views/authentication/authentication_view.dart';
 import '../views/main/main_view.dart';
 import '../views/main/pages/home_view.dart';
 
@@ -17,7 +18,7 @@ Widget _material(Widget child) => Material(
 final List<RouteBase> appRoutes = [
   GoRoute(
     path: Routes.authentication,
-    builder: (context, state) => _material(const PagePlaceholder(label: "Authentication")),
+    builder: (context, state) => _material(const AuthenticationView()),
   ),
   StatefulShellRoute.indexedStack(
     builder: (context, state, navigationShell) => MainView(navigationShell: navigationShell),

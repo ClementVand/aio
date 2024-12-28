@@ -14,7 +14,7 @@ void main() {
     //   onPaused: () => print("App paused"),
     //   onResumed: () => print("App resumed"),
     // ),
-    // useAppSession: true,
+    useAppSession: true,
     // debug: true,
   );
 }

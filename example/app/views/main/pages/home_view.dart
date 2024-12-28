@@ -1,3 +1,4 @@
+import 'package:aio/aio.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
@@ -5,6 +6,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Home"));
+    return const PagePlaceholder(label: "Home");
   }
 }
