@@ -27,12 +27,22 @@ start using the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+You can either use the package as is and access the functionalities through the `App()` class.
 
-```dart
-const like = 'sample';
+Or you can use the package as a starting point for your own app. In this case you will need to follow these steps:
+* Create a new Flutter project
+* Add the package to your `pubspec.yaml` file
+```yaml
+dependencies:
+  aio:
+    git:
+      url: https://github.com/ClementVand/aio.git
+      ref: main
+      path: .
 ```
+
+* Download the package as .zip from github and extract everything from aio/example to your `lib` folder (you must replace the possibly existing `main.dart` file from the default Flutter project template)
+* You should now be able to run the app with `flutter run`
 
 ## Additional information
 
