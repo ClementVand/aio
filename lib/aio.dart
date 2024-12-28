@@ -22,7 +22,7 @@ part 'extensions/session.dart';
 part 'utils/app_lifecycle_handler.dart';
 part 'utils/initializable.dart';
 part 'utils/logger/logger.dart';
-part 'utils/logger/logger.view.dart';
+part 'utils/logger/logger_view.dart';
 part 'utils/page_placeholder.dart';
 part 'utils/palette.dart';
 part 'utils/request.dart';

@@ -100,10 +100,11 @@ class _LoggerViewState extends State<LoggerView> {
       itemCount: _logs.length,
       itemBuilder: (context, index) {
         final Log log = _logs[index];
+        final int length = log.message.length;
 
         return ListTile(
           title: Text(
-            log.message,
+            length > 64 ? "${log.message.substring(0, 64)}...." : log.message,
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -120,6 +121,37 @@ class _LoggerViewState extends State<LoggerView> {
             radius: 15,
             child: Text(log.level.name[0]),
           ),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${log.level.name} - ${log.tag.name}"),
+                    Text(log.date, style: const TextStyle(fontSize: 14)),
+                  ],
+                ),
+                content: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Text(log.message),
+                  ),
+                ),
+                insetPadding: const EdgeInsets.all(16),
+                actions: [
+                  TextButton(
+                    onPressed: Navigator.of(context).pop,
+                    child: const Text("Close"),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
