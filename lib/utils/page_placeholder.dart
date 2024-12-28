@@ -12,20 +12,22 @@ class PagePlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        child: onButtonPressed == null
-            ? Text(label)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(label),
-                  ElevatedButton(
-                    onPressed: onButtonPressed,
-                    child: const Text("Click me"),
-                  ),
-                ],
+    return ColoredBox(
+      color: Colors.white,
+      child: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(label),
+            if (onButtonPressed != null) ...[
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: onButtonPressed,
+                child: const Text("Click me"),
               ),
+            ]
+          ],
+        ),
       ),
     );
   }
