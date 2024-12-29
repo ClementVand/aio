@@ -18,7 +18,7 @@ mixin Logger<T> {
 
   /// Logs a message with the given [level] and [tag].
   /// Only logs if [Logger.enabled] is `true`.
-  void log(
+  static void log(
     String message, {
     LoggerLevel level = LoggerLevel.info,
     LoggerTag tag = LoggerTag.global,
