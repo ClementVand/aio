@@ -22,27 +22,10 @@ TODO: List what your package can do. Maybe include images, gifs, or videos.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
 You can either use the package as is and access the functionalities through the `App()` class.
 
-Or you can use the package as a starting point for your own app. In this case you will need to follow these steps:
-* Create a new Flutter project
-* Add the package to your `pubspec.yaml` file
-```yaml
-dependencies:
-  aio:
-    git:
-      url: https://github.com/ClementVand/aio.git
-      ref: main
-      path: .
-```
-
-* Download the package as .zip from github and extract everything from aio/example to your `lib` folder (you must replace the possibly existing `main.dart` file from the default Flutter project template)
-* You should now be able to run the app with `flutter run`
+Or you can use the [aio_app_template](https://github.com/ClementVand/aio_app_template) as 
+a starting point for your own app to get a better understanding of how everything works.
 
 ## Additional information
 
