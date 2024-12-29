@@ -47,6 +47,7 @@ class App {
   void run(
     Widget app, {
     List<InitializableDependency> dependencies = const [],
+    ColorPalette? colorPalette, // TODO: Add default color palette
     AppLifeCycleHandler? appLifeCycleHandler,
     bool useAppSession = false,
     Widget? errorWidget,
@@ -65,6 +66,7 @@ class App {
     appLifeCycleHandler?.init(null);
     // TODO: Simplify usage of AppSession ? Init it anyway ?
     if (useAppSession) await _initSession();
+    if (colorPalette != null) this.colorPalette = colorPalette;
 
     // Initialize dependencies
     try {
