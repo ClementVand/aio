@@ -5,17 +5,16 @@ class PageLayout extends StatefulWidget {
     super.key,
     required this.child,
     this.header = const PageHeader(title: "Untitled Page"),
-    this.fixedTopWidget,
+    this.topWidget,
     this.topWidgetBreakpoint = 0.0,
     this.topWidgetSize,
-    this.fixedBottomWidget,
-    this.childSize,
+    this.floatingBottomWidget,
     this.bottomSafeArea = true,
     this.scrollController,
   }) {
     assert(topWidgetBreakpoint >= 0.0, "Top widget breakpoint must be greater or equal to 0.0");
 
-    if (fixedTopWidget != null) {
+    if (topWidget != null) {
       assert(topWidgetSize != null && topWidgetSize! >= 0, "Top widget size must be greater than 0");
     }
   }
@@ -31,7 +30,7 @@ class PageLayout extends StatefulWidget {
 
   /// The top widget that will be displayed when the scroll reaches the
   /// breakpoint. If the breakpoint is 0.0, the widget will be displayed.
-  final Widget? fixedTopWidget;
+  final Widget? topWidget;
 
   /// The breakpoint at which the top widget will be displayed.
   final double topWidgetBreakpoint;
@@ -40,13 +39,7 @@ class PageLayout extends StatefulWidget {
 
   /// The bottom widget that will be displayed stacked on top of the content of
   /// the page at the bottom.
-  final Widget? fixedBottomWidget;
-
-  /// The size of the child widget.
-  /// This is used to calculate the height of the content of the page.
-  ///
-  /// You can use ```dart MediaQuery.of(context).size```
-  final Size? childSize;
+  final Widget? floatingBottomWidget;
 
   final ScrollController? scrollController;
 
@@ -57,7 +50,9 @@ class PageLayout extends StatefulWidget {
 class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateMixin {
   late final ScrollController _scrollController = widget.scrollController ?? ScrollController();
   late final AnimationController _opacityController;
+
   bool _showTopWidget = false;
+  bool _shrinkContent = false;
 
   @override
   void initState() {
@@ -93,6 +88,7 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
     if (!_showTopWidget && _scrollController.offset >= widget.topWidgetBreakpoint) {
       setState(() {
         _showTopWidget = true;
+        _shrinkContent = true;
         _opacityController.forward();
       });
     } else if (_showTopWidget && _scrollController.offset < widget.topWidgetBreakpoint) {
@@ -108,56 +104,50 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
     double headerSize = widget.header.isHidden ? 0 : 56;
     double topWidgetSize = widget.topWidgetSize ?? 0;
 
-    double bottomPadding = 0;
-    bottomPadding += topWidgetSize;
-
-    double? childHeight =
-        widget.childSize != null ? widget.childSize!.height - headerSize - topWidgetSize - bottomPadding : null;
-
     return LayoutBuilder(builder: (context, constraints) {
+      double childHeight = constraints.maxHeight - headerSize - (_shrinkContent ? topWidgetSize : 0);
       return Stack(
         alignment: Alignment.topCenter,
         children: [
-          Positioned(
-            top: 0,
-            width: constraints.maxWidth,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildHeader(),
-                AnimatedSize(
-                  duration: const Duration(milliseconds: 700),
-                  curve: Curves.fastOutSlowIn,
-                  child: SizedBox(
-                    height: _showTopWidget ? widget.topWidgetSize : 0,
-                    child: FadeTransition(
-                      opacity: _opacityController,
-                      child: widget.fixedTopWidget,
-                    ),
+          Column(
+            children: [
+              _buildHeader(),
+              AnimatedSize(
+                duration: const Duration(milliseconds: 700),
+                curve: Curves.fastOutSlowIn,
+                onEnd: () => setState(() {
+                  if (!_showTopWidget) _shrinkContent = false;
+                }),
+                child: SizedBox(
+                  height: _showTopWidget ? widget.topWidgetSize : 0,
+                  child: FadeTransition(
+                    opacity: _opacityController,
+                    child: widget.topWidget,
                   ),
                 ),
-                SizedBox(
-                  height: constraints.maxHeight - headerSize,
+              ),
+              AnimatedSize(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.fastOutSlowIn,
+                child: SizedBox(
+                  height: childHeight,
                   child: SingleChildScrollView(
                     controller: _scrollController,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: childHeight,
-                          child: widget.child,
-                        ),
-                        SizedBox(height: bottomPadding),
-                      ],
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: childHeight, // Set the minimum height to the container height
+                      ),
+                      child: widget.child,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          if (widget.fixedBottomWidget != null)
+          if (widget.floatingBottomWidget != null)
             Positioned(
               bottom: 16.0 + (widget.bottomSafeArea == false ? MediaQuery.of(context).padding.bottom : 0.0),
-              child: widget.fixedBottomWidget!,
+              child: widget.floatingBottomWidget!,
             ),
         ],
       );
@@ -173,6 +163,7 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
       height: widget.header.height,
       width: MediaQuery.sizeOf(context).width,
       padding: const EdgeInsets.symmetric(horizontal: 16),
+      color: App().colorPalette.neutralColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
