@@ -9,6 +9,7 @@ class Palette {
     Color? secondaryColor,
     Color? backgroundColor,
     Color? surfaceColor,
+    Color? iconColor,
   }) {
     assert(_checkSwatch(primarySwatch));
 
@@ -18,6 +19,7 @@ class Palette {
     this.secondaryColor = primarySwatch[300]!;
     this.backgroundColor = backgroundColor ?? primarySwatch[50]!;
     this.surfaceColor = surfaceColor ?? primarySwatch[100]!;
+    this.iconColor = iconColor ?? primarySwatch[400]!;
   }
 
   final ColorSwatch<int> primarySwatch;
@@ -28,6 +30,7 @@ class Palette {
   late final Color secondaryColor; // primarySwatch[300]
   late final Color backgroundColor; // primarySwatch[50]
   late final Color surfaceColor; // primarySwatch[100]
+  late final Color iconColor; // primarySwatch[400]
 
   bool _checkSwatch(ColorSwatch<int>? swatch) {
     if (swatch == null) return true;
