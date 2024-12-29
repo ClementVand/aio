@@ -29,7 +29,7 @@ abstract class Dependency<T extends Dependency<T>> with Initializable, Logger<T>
   /// It is overridden as `async` to allow for asynchronous initialization.
   @override
   Future<void> init(Object? options) async {
-    log("Initialized [$T] with options: $options");
+    _log("Initialized [$T] with options: $options");
     super.init(options);
   }
 }

@@ -33,7 +33,7 @@ class Request<T> with Logger {
       // Internet connection is available
       _preflightCompleter.complete(true);
     } else {
-      _log("\tNo internet connection... Aborting request.");
+      _addLog("\tNo internet connection... Aborting request.");
       _preflightCompleter.complete(false);
     }
   }
@@ -55,19 +55,19 @@ class Request<T> with Logger {
 
   void _execRequest(Future<Object?> Function() callback) {
     try {
-      _log("\tExecuting request...");
+      _addLog("\tExecuting request...");
       callback().then((response) {
         _response = response as T;
 
         _responseCompleter.complete(true);
       });
     } catch (e) {
-      _log("\tError: $e");
+      _addLog("\tError: $e");
       _responseCompleter.complete(false);
     }
   }
 
-  void _log(String message) {
+  void _addLog(String message) {
     _logs.add(message);
   }
 
@@ -83,6 +83,6 @@ $logHeader
 ${_logs.join("\n")}
 $logFooter
     """;
-    log(logStack, level: level, tag: LoggerTag.network);
+    _log(logStack, level: level, tag: LoggerTag.network);
   }
 }

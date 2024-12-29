@@ -16,9 +16,22 @@ mixin Logger<T> {
   static bool enabled = false;
   static File? _logFile;
 
-  /// Logs a message with the given [level] and [tag].
+  /// Static method to log a message with the given [level] and [tag].
   /// Only logs if [Logger.enabled] is `true`.
   static void log(
+    String message, {
+    LoggerLevel level = LoggerLevel.info,
+    LoggerTag tag = LoggerTag.global,
+  }) {
+    if (!enabled) return;
+
+    final String log = _serialize(message, level, tag);
+    _writeToFile(log);
+  }
+
+  /// Logs a message with the given [level] and [tag].
+  /// Only logs if [Logger.enabled] is `true`.
+  void _log(
     String message, {
     LoggerLevel level = LoggerLevel.info,
     LoggerTag tag = LoggerTag.global,
