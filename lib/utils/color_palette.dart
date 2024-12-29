@@ -49,7 +49,7 @@ class ColorPalette {
 /// - `default` - The default color of the object.
 /// - `selected` - The color of the object when it is selected.
 class ColorState {
-  ColorState({
+  const ColorState({
     required this.defaultColor,
     required this.selectedColor,
   });
