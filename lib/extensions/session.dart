@@ -37,6 +37,8 @@ class Session {
 
   bool get isLogged => _user != null;
 
+  User? get user => _user;
+
   /// Saves the token and calls the [onSave] callback.
   Future<void> save(User user, {void Function()? onSave}) async {
     _user = user;
