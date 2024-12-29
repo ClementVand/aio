@@ -9,7 +9,7 @@ class ColorPalette {
     Color? secondaryColor,
     Color? backgroundColor,
     Color? surfaceColor,
-    Color? iconColor,
+    ColorState? iconColor,
   }) {
     assert(_checkSwatch(primarySwatch));
 
@@ -19,7 +19,12 @@ class ColorPalette {
     this.secondaryColor = primarySwatch[300]!;
     this.backgroundColor = backgroundColor ?? primarySwatch[50]!;
     this.surfaceColor = surfaceColor ?? primarySwatch[100]!;
-    this.iconColor = iconColor ?? primarySwatch[400]!;
+
+    this.iconColor = iconColor ??
+        ColorState(
+          defaultColor: primarySwatch[100]!,
+          selectedColor: primarySwatch[500]!,
+        );
   }
 
   final ColorSwatch<int> primarySwatch;
@@ -30,12 +35,27 @@ class ColorPalette {
   late final Color secondaryColor; // primarySwatch[300]
   late final Color backgroundColor; // primarySwatch[50]
   late final Color surfaceColor; // primarySwatch[100]
-  late final Color iconColor; // primarySwatch[400]
+
+  late final ColorState iconColor; // primarySwatch[100] and primarySwatch[500]
 
   bool _checkSwatch(ColorSwatch<int>? swatch) {
     if (swatch == null) return true;
     return _swatchValues.every((value) => swatch[value] != null);
   }
+}
+
+/// An object containing different colors for the same object with
+/// different states:
+/// - `default` - The default color of the object.
+/// - `selected` - The color of the object when it is selected.
+class ColorState {
+  ColorState({
+    required this.defaultColor,
+    required this.selectedColor,
+  });
+
+  final Color defaultColor;
+  final Color selectedColor;
 }
 
 const List<int> _swatchValues = [
