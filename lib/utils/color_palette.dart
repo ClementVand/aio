@@ -1,7 +1,7 @@
 part of '../aio.dart';
 
-class Palette {
-  Palette({
+class ColorPalette {
+  ColorPalette({
     required this.primarySwatch,
     Color? neutralColor,
     Color? neutralColorDark,
