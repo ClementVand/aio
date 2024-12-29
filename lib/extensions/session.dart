@@ -33,13 +33,13 @@ extension AppSession on App {
 class Session {
   Session();
 
-  String? _token;
+  User? _user;
 
-  bool get isLogged => _token != null;
+  bool get isLogged => _user != null;
 
   /// Saves the token and calls the [onSave] callback.
-  Future<void> save(String token, {void Function()? onSave}) async {
-    _token = token;
+  Future<void> save(User user, {void Function()? onSave}) async {
+    _user = user;
 
     await _saveSession();
     onSave?.call();
@@ -47,26 +47,51 @@ class Session {
 
   /// Clears the token and calls the [onClear] callback.
   Future<void> clear([void Function()? onClear]) async {
-    _token = null;
+    _user = null;
     await _clearSession();
   }
 
-  static const String _keyToken = "_token";
+  static const String _keyUser = "_user";
 
   Future<void> _init() async {
     const storage = FlutterSecureStorage();
-    _token = await storage.read(key: _keyToken);
+    String? data = await storage.read(key: _keyUser);
+    _user = User.parse(data);
   }
 
   /// Saves the session token in the secure storage.
   Future<void> _saveSession() async {
     const storage = FlutterSecureStorage();
-    await storage.write(key: _keyToken, value: _token);
+    await storage.write(key: _keyUser, value: _user?.serialize());
   }
 
   /// Clears the session token from the secure storage.
   Future<void> _clearSession() async {
     const storage = FlutterSecureStorage();
-    await storage.delete(key: _keyToken);
+    await storage.delete(key: _keyUser);
+  }
+}
+
+/// A model to store the user data.
+class User {
+  User({
+    required this.email,
+    required this.token,
+  });
+
+  User.parse(String? data) {
+    if (data == null) return;
+
+    final parts = data.split("<|>");
+
+    email = parts[0];
+    token = parts[1];
+  }
+
+  late final String? email;
+  late final String? token;
+
+  String serialize() {
+    return "${email ?? ""}<|>${token ?? ""}";
   }
 }
