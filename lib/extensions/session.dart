@@ -48,7 +48,9 @@ class Session {
   /// Clears the token and calls the [onClear] callback.
   Future<void> clear([void Function()? onClear]) async {
     _user = null;
+
     await _clearSession();
+    onClear?.call();
   }
 
   static const String _keyUser = "_user";
