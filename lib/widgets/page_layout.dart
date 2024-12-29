@@ -9,6 +9,7 @@ class PageLayout extends StatefulWidget {
     this.topWidgetBreakpoint = 0.0,
     this.topWidgetSize,
     this.floatingBottomWidget,
+    this.floatingBottomWidgetSize,
     this.bottomSafeArea = true,
     this.scrollController,
   }) {
@@ -16,6 +17,11 @@ class PageLayout extends StatefulWidget {
 
     if (topWidget != null) {
       assert(topWidgetSize != null && topWidgetSize! >= 0, "Top widget size must be greater than 0");
+    }
+
+    if (floatingBottomWidget != null) {
+      assert(floatingBottomWidgetSize != null && floatingBottomWidgetSize! >= 0,
+          "Floating bottom widget size must be greater than 0");
     }
   }
 
@@ -40,6 +46,8 @@ class PageLayout extends StatefulWidget {
   /// The bottom widget that will be displayed stacked on top of the content of
   /// the page at the bottom.
   final Widget? floatingBottomWidget;
+
+  final double? floatingBottomWidgetSize;
 
   final ScrollController? scrollController;
 
@@ -105,7 +113,10 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
     double topWidgetSize = widget.topWidgetSize ?? 0;
 
     return LayoutBuilder(builder: (context, constraints) {
-      double childHeight = constraints.maxHeight - headerSize - (_shrinkContent ? topWidgetSize : 0);
+      double childHeight = constraints.maxHeight - headerSize;
+      childHeight = childHeight - (_shrinkContent ? topWidgetSize : 0);
+      childHeight = childHeight - (widget.floatingBottomWidget != null ? widget.floatingBottomWidgetSize! : 0);
+
       return Stack(
         alignment: Alignment.topCenter,
         children: [
