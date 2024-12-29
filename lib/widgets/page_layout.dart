@@ -185,7 +185,11 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(2),
                 ),
-                child: widget.header.leading ?? Icon(Icons.chevron_left, color: App().colorPalette.iconColor),
+                child: widget.header.leading ??
+                    Icon(
+                      Icons.chevron_left,
+                      color: App().colorPalette.iconColor.defaultColor,
+                    ),
               ),
             ),
           if (!showBackButton) const SizedBox(width: 40),
