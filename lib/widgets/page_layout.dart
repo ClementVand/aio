@@ -192,7 +192,7 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
           if (!showBackButton) const SizedBox(width: 40),
           StyledText(
             widget.header.title,
-            format: TextFormat.mMedium,
+            format: TextFormat.mSemibold,
           ),
           if (widget.header.trailing != null) widget.header.trailing!,
           if (widget.header.trailing == null) const SizedBox(width: 40),
