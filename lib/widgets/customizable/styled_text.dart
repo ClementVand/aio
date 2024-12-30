@@ -38,6 +38,7 @@ class StyledText extends StatelessWidget {
 
 enum TextFormat {
   xlSemibold,
+  mSemibold,
   mMedium,
   sSemiBold,
   xsBold,
@@ -47,6 +48,10 @@ enum TextFormat {
 final Map<TextFormat, TextStyle> _textStyleMap = {
   TextFormat.xlSemibold: const TextStyle(
     fontSize: 26,
+    fontWeight: FontWeight.w600,
+  ),
+  TextFormat.mSemibold: const TextStyle(
+    fontSize: 20,
     fontWeight: FontWeight.w600,
   ),
   TextFormat.mMedium: const TextStyle(
