@@ -169,7 +169,7 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
       height: widget.header.height,
       width: MediaQuery.sizeOf(context).width,
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: App().colorPalette.neutralColor,
+      color: App().colorPalette.backgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
