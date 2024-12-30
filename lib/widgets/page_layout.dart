@@ -115,7 +115,7 @@ class _PageLayoutState extends State<PageLayout> with SingleTickerProviderStateM
     return LayoutBuilder(builder: (context, constraints) {
       double childHeight = constraints.maxHeight - headerSize;
       childHeight = childHeight - (_shrinkContent ? topWidgetSize : 0);
-      childHeight = childHeight - (widget.floatingBottomWidget != null ? widget.floatingBottomWidgetSize! + 16: 0);
+      childHeight = childHeight - (widget.floatingBottomWidgetSize != null ? widget.floatingBottomWidgetSize! + 16: 0);
 
       return Stack(
         alignment: Alignment.topCenter,
