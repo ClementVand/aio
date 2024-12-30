@@ -9,7 +9,7 @@ class PageLayout extends StatefulWidget {
     this.topWidgetBreakpoint = 0.0,
     this.topWidgetSize,
     this.floatingBottomWidget,
-    this.floatingBottomWidgetSize,
+    this.floatingBottomWidgetSize = 0.0,
     this.bottomSafeArea = true,
     this.scrollController,
   }) {
@@ -17,11 +17,6 @@ class PageLayout extends StatefulWidget {
 
     if (topWidget != null) {
       assert(topWidgetSize != null && topWidgetSize! >= 0, "Top widget size must be greater than 0");
-    }
-
-    if (floatingBottomWidget != null) {
-      assert(floatingBottomWidgetSize != null && floatingBottomWidgetSize! >= 0,
-          "Floating bottom widget size must be greater than 0");
     }
   }
 
